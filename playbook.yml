@@ -10,3 +10,6 @@
 
     - import_tasks: tasks/heimdall.yml
       tags: heimdall
+
+    - import_tasks: tasks/glances.yml
+      tags: glances
