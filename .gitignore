@@ -1,5 +1,5 @@
 .vscode/
-vars/*
+vars/*.yml
 .DS_Store
 
 # Environments

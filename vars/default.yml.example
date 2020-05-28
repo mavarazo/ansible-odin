@@ -1,0 +1,33 @@
+ansible_python_interpreter: /usr/bin/python3
+
+###
+### Global
+###
+timezone: Europe/Zurich
+base_port: 10000
+
+###
+### Docker
+###
+docker_username: 
+docker_uid: 
+docker_groupname: 
+docker_gid: 
+
+docker_home: 
+
+dockerhub_username: 
+dockerhub_password: 
+
+###
+### Heimdall
+###
+heimdall_username: "{{ docker_username }}"
+heimdall_uid: "{{ docker_uid }}"
+heimdall_groupname: "{{ docker_groupname }}"
+heimdall_gid: "{{ docker_gid }}"
+heimdall_docker_image: linuxserver/heimdall:latest
+heimdall_data_directory: "{{ docker_home }}/heimdall"
+heimdall_base_port: 10
+heimdall_port_http: "{{ base_port + heimdall_base_port}}"
+heimdall_port_https: "{{ base_port + heimdall_base_port + 1}}"
