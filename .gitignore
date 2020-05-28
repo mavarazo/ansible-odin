@@ -1,4 +1,6 @@
 .vscode/
+vars/*
+.DS_Store
 
 # Environments
 .env
