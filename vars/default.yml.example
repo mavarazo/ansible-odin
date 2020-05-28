@@ -31,3 +31,11 @@ heimdall_data_directory: "{{ docker_home }}/heimdall"
 heimdall_base_port: 10
 heimdall_port_http: "{{ base_port + heimdall_base_port}}"
 heimdall_port_https: "{{ base_port + heimdall_base_port + 1}}"
+
+###
+### Glances
+###
+glances_docker_image: nicolargo/glances
+glances_base_port: 20
+glances_port_one: "{{ base_port + glances_base_port}}"
+glances_port_two: "{{ base_port + glances_base_port + 1}}"
