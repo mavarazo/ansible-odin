@@ -20,6 +20,17 @@ dockerhub_username:
 dockerhub_password: 
 
 ###
+### Traefik
+###
+traefik_data_directory: "{{ docker_home }}/traefik"
+traefik_docker_image: traefik:latest
+traefik_acme_email: 
+traefik_acme_caserver: https://acme-staging-v02.api.letsencrypt.org/directory
+traefik_acme_provider: duckdns
+traefik_acme_duckdns_token: 
+traefik_acme_domain: 
+
+###
 ### Heimdall
 ###
 heimdall_username: "{{ docker_username }}"
