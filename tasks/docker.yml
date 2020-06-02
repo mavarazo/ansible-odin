@@ -1,5 +1,46 @@
 ---
-- name: Log into DockerHub
+- name: User docker
+  user:
+    name: "{{ docker_username }}"
+    uid: "{{ docker_uid }}"
+    state: present
+    system: yes
+    update_password: on_create
+    create_home: no
+    group: "{{ docker_groupname }}"
+
+- name: APT add docker gpg apt key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: APT add docker repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+
+- name: APT update cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  register: result
+  until: result is succeeded
+
+- name: APT install docker-ce
+  apt: 
+    name: docker-ce
+    state: latest
+  register: result
+  until: result is succeeded
+
+- name: PIP install docker
+  pip:
+    name: docker, requests
+    state: present
+  register: result
+  until: result is succeeded
+
+- name: Docker Login
   docker_login:
     username: "{{ dockerhub_username }}"
     password: "{{ dockerhub_password }}"

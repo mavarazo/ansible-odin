@@ -1,5 +1,5 @@
 ---
-- name: Create Traefik Directories
+- name: File traefik directories
   file:
     path: "{{ item }}"
     state: directory
@@ -8,19 +8,19 @@
   with_items:
     - "{{ traefik_data_directory }}"
 
-- name: Ensures acme.json file exists
+- name: File acme.json file
   file:
     path: "{{ traefik_data_directory }}/acme.json"
     state: touch
-    mode: C(0600)
+    mode: '0600'
 
-- name: Adding traefik.yml file
+- name: Template traefik.yml
   template:
     src: traefik.yml.j2
     dest: "{{ traefik_data_directory }}/traefik.yml"
-    mode: C(0600)
+    mode: '0600'
 
-- name: Traefik Docker Container
+- name: Docker container traefik
   docker_container:
     name: traefik
     image: "{{ traefik_docker_image }}"
@@ -34,7 +34,7 @@
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       traefik.enable: "true"
-      traefik.http.routers.traefik.rule: "Host(`{{ item }}.{{ traefik_acme_domain }}`)"
+      traefik.http.routers.traefik.rule: "Host(traefik.{{ traefik_acme_domain }})"
       traefik.http.routers.traefik.entrypoints: "websecure"
       traefik.http.routers.traefik.service: "api@internal"
     restart_policy: unless-stopped

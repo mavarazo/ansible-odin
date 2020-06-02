@@ -1,6 +1,8 @@
 .vscode/
 vars/*.yml
 .DS_Store
+.vagrant
+*.retry
 
 # Environments
 .env

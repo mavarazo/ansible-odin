@@ -1,5 +1,5 @@
 ---
-- name: Glances Docker Container
+- name: Docker container glances
   docker_container:
     name: glances
     image: "{{ glances_docker_image }}"
