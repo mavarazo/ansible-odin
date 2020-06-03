@@ -7,6 +7,7 @@ log:
 
 api:
   dashboard: true
+  insecure = true
 
 entryPoints:
   web:
@@ -22,19 +23,19 @@ entryPoints:
       tls:
         certResolver: le
         domains:
-          - main: "{{ traefik_acme_domain }}"
+          - main: "{{ traefik_acme_domain_main }}"
             sans:
-              - "*.{{ traefik_acme_domain }}"
+              {% for sans in traefik_acme_domain_sans %}
+              - "{{ sans }}"
+              {% endfor %}
 
 certificatesResolvers:
   le:
     acme:
       email: "{{ traefik_acme_email }}"
       storage: acme.json
-      caServer = {{ traefik_acme_caserver }}""
-      dnsChallenge:
-        provider: "{{ traefik_acme_provider }}"
-        delayBeforeCheck: 5
+      caServer: "{{ traefik_acme_caserver }}"
+      tlsChallenge: {}
 
 providers:
   docker:
