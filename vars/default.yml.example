@@ -3,6 +3,8 @@ ansible_python_interpreter: /usr/bin/python3
 ###
 ### Global
 ###
+hostname:
+user: 
 timezone: Europe/Zurich
 base_port: 10000
 
