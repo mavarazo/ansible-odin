@@ -34,7 +34,7 @@ certificatesResolvers:
     acme:
       email: "{{ traefik_acme_email }}"
       storage: acme.json
-      caServer: "{{ traefik_acme_caserver }}"
+      caServer: "{{ traefik_acme_caserver | default('https://acme-v02.api.letsencrypt.org/directory') }}"
       tlsChallenge: {}
 
 providers:

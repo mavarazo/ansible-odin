@@ -27,17 +27,17 @@
     pull: true
     # network_mode: host
     ports:
-      - "{{ traefik_port_http }}:80"
-      - "{{ traefik_port_https }}:443"
-      - "{{ traefik_port_dashboard }}:8080"
+      - "{{ traefik_port_http | default('80') }}:80"
+      - "{{ traefik_port_https | default('443') }}:443"
+      - "{{ traefik_port_dashboard | default('8080') }}:8080"
     volumes:
       - "{{ traefik_data_directory }}/traefik.yml:/etc/traefik/traefik.yml"
       - "{{ traefik_data_directory }}/acme.json:/acme.json"
       - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.traefik.rule: "Host(`traefik.{{ traefik_acme_domain }}`)"
-      traefik.http.routers.traefik.entrypoints: "websecure"
-      traefik.http.routers.traefik.service: "api@internal"
+    # labels:
+    #  traefik.enable: "true"
+    #  traefik.http.routers.traefik.rule: "Host(`traefik.{{ traefik_acme_domain }}`)"
+    #  traefik.http.routers.traefik.entrypoints: "websecure"
+    #  traefik.http.routers.traefik.service: "api@internal"
     restart_policy: unless-stopped
     memory: 1g
