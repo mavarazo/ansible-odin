@@ -1,0 +1,42 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+log:
+  level: ERROR
+
+api:
+  dashboard: true
+  insecure: true
+
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: :443
+    http:
+      tls:
+        certResolver: le
+        domains:
+          - main: "{{ traefik_acme_domain_main }}"
+            sans:
+              {% for sans in traefik_acme_domain_sans %}
+              - "{{ sans }}"
+              {% endfor %}
+
+certificatesResolvers:
+  le:
+    acme:
+      email: "{{ traefik_acme_email }}"
+      storage: acme.json
+      caServer: "{{ traefik_acme_caserver | default('https://acme-v02.api.letsencrypt.org/directory') }}"
+      tlsChallenge: {}
+
+providers:
+  docker:
+    exposedByDefault: false

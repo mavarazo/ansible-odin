@@ -1,12 +1,18 @@
 ---
-- hosts: localhost
+- hosts: all
   become: true
   vars_files:
     - vars/default.yml
 
   tasks:
+    - import_tasks: tasks/default.yml
+      tags: default
+
     - import_tasks: tasks/docker.yml
       tags: docker
+
+    - import_tasks: tasks/traefik.yml
+      tags: traefik
 
     - import_tasks: tasks/heimdall.yml
       tags: heimdall

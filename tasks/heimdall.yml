@@ -1,11 +1,11 @@
 ---
-- name: Create Heimdall group
+- name: Group heimdall
   group:
     name: "{{ heimdall_groupname }}"
     gid: "{{ heimdall_gid }}"
     state: present
 
-- name: Create Heimdall user
+- name: User heimdall
   user:
     name: "{{ heimdall_username }}"
     uid: "{{ heimdall_uid }}"
@@ -15,7 +15,7 @@
     create_home: no
     group: "{{ heimdall_groupname }}"
 
-- name: Create Heimdall Directories
+- name: File heimdall directories
   file:
     path: "{{ item }}"
     state: directory
@@ -24,7 +24,7 @@
   with_items:
     - "{{ heimdall_data_directory }}"
 
-- name: Create Heimdall container
+- name: Docker container heimdall
   docker_container:
     name: heimdall
     image: "{{ heimdall_docker_image }}"
