@@ -26,8 +26,12 @@ dockerhub_password:
 ###
 traefik_data_directory: "{{ docker_home }}/traefik"
 traefik_docker_image: traefik:latest
+traefik_port_base: 10
+traefik_port_http: "{{ base_port + traefik_port_base}}"
+traefik_port_https: "{{ base_port + traefik_port_base + 1}}"
+traefik_port_dashboard: "{{ base_port + traefik_port_base + 2}}"
 traefik_acme_email: 
-traefik_acme_caserver: https://acme-staging-v02.api.letsencrypt.org/directory # production: https://acme-v02.api.letsencrypt.org/directory
+traefik_acme_caserver: https://acme-staging-v02.api.letsencrypt.org/directory
 traefik_acme_domain: 
 traefik_acme_domain_main: "main.{{ traefik_acme_domain }}"
 traefik_acme_domain_sans: 
@@ -42,7 +46,7 @@ heimdall_groupname: "{{ docker_groupname }}"
 heimdall_gid: "{{ docker_gid }}"
 heimdall_docker_image: linuxserver/heimdall:latest
 heimdall_data_directory: "{{ docker_home }}/heimdall"
-heimdall_base_port: 10
+heimdall_base_port: 20
 heimdall_port_http: "{{ base_port + heimdall_base_port}}"
 heimdall_port_https: "{{ base_port + heimdall_base_port + 1}}"
 
@@ -50,6 +54,6 @@ heimdall_port_https: "{{ base_port + heimdall_base_port + 1}}"
 ### Glances
 ###
 glances_docker_image: nicolargo/glances
-glances_base_port: 20
+glances_base_port: 30
 glances_port_one: "{{ base_port + glances_base_port}}"
 glances_port_two: "{{ base_port + glances_base_port + 1}}"
