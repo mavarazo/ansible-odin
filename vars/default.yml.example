@@ -6,7 +6,7 @@ ansible_python_interpreter: /usr/bin/python3
 hostname:
 user: 
 timezone: Europe/Zurich
-base_port: 10000
+port_base: 10000
 
 ###
 ### Docker
@@ -27,9 +27,9 @@ dockerhub_password:
 traefik_data_directory: "{{ docker_home }}/traefik"
 traefik_docker_image: traefik:latest
 traefik_port_base: 10
-traefik_port_http: "{{ base_port + traefik_port_base}}"
-traefik_port_https: "{{ base_port + traefik_port_base + 1}}"
-traefik_port_dashboard: "{{ base_port + traefik_port_base + 2}}"
+traefik_port_http: "{{ port_base + traefik_port_base }}"
+traefik_port_https: "{{ port_base + traefik_port_base + 1}}"
+traefik_port_dashboard: "{{ port_base + traefik_port_base + 2}}"
 traefik_acme_email: 
 traefik_acme_caserver: https://acme-staging-v02.api.letsencrypt.org/directory
 traefik_acme_domain: 
@@ -46,14 +46,36 @@ heimdall_groupname: "{{ docker_groupname }}"
 heimdall_gid: "{{ docker_gid }}"
 heimdall_docker_image: linuxserver/heimdall:latest
 heimdall_data_directory: "{{ docker_home }}/heimdall"
-heimdall_base_port: 20
-heimdall_port_http: "{{ base_port + heimdall_base_port}}"
-heimdall_port_https: "{{ base_port + heimdall_base_port + 1}}"
+heimdall_port_base: 20
+heimdall_port_http: "{{ port_base + heimdall_port_base }}"
+heimdall_port_https: "{{ port_base + heimdall_port_base + 1}}"
 
 ###
 ### Glances
 ###
 glances_docker_image: nicolargo/glances
-glances_base_port: 30
-glances_port_one: "{{ base_port + glances_base_port}}"
-glances_port_two: "{{ base_port + glances_base_port + 1}}"
+glances_port_base: 30
+glances_port_one: "{{ port_base + glances_port_base }}"
+glances_port_two: "{{ port_base + glances_port_base + 1}}"
+
+###
+### MariaDB
+###
+mariadb_docker_image: linuxserver/mariadb:latest
+mariadb_root_password:  
+
+###
+### Nextcloud
+###
+nextcloud_username: "{{ docker_username }}"
+nextcloud_uid: "{{ docker_uid }}"
+nextcloud_groupname: "{{ docker_groupname }}"
+nextcloud_gid: "{{ docker_gid }}"
+nextcloud_docker_image: linuxserver/nextcloud:latest
+nextcloud_data_directory: "{{ docker_home }}/nextcloud"
+nextcloud_port_base: 40
+nextcloud_port_webgui: "{{ port_base + nextcloud_port_base }}"
+nextcloud_port_database: "{{ port_base + nextcloud_port_base + 1 }}"
+nextcloud_database_database: nextcloud
+nextcloud_database_username: 
+nextcloud_database_password: 

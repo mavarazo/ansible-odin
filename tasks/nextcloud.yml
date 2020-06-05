@@ -1,0 +1,66 @@
+---
+- name: Group nextcloud
+  group:
+    name: "{{ nextcloud_groupname }}"
+    gid: "{{ nextcloud_gid }}"
+    state: present
+
+- name: User nextcloud
+  user:
+    name: "{{ nextcloud_username }}"
+    uid: "{{ nextcloud_uid }}"
+    state: present
+    system: yes
+    update_password: on_create
+    create_home: no
+    group: "{{ nextcloud_groupname }}"
+
+- name: File nextcloud directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ nextcloud_username }}"
+    group: "{{ nextcloud_groupname }}"
+  with_items:
+    - "{{ nextcloud_data_directory }}"
+
+- name: Docker container mariadb
+  docker_container:
+    name: nextcloud-mariadb
+    image: "{{ mariadb_docker_image }}"
+    pull: true
+    volumes:
+      - "{{ nextcloud_data_directory }}/database:/config:rw"
+    ports:
+      - "{{ nextcloud_port_database }}:3306"
+    env:
+      PUID: "{{ nextcloud_uid }}"
+      PGID: "{{ nextcloud_gid }}"
+      TZ: "{{ timezone }}"
+      MYSQL_ROOT_PASSWORD: "{{ mariadb_root_password }}"
+      MYSQL_DATABASE: "{{ nextcloud_database_database | default('nextcloud') }}"
+      MYSQL_USER: "{{ nextcloud_database_username }}"
+      MYSQL_PASSWORD: "{{ nextcloud_database_password }}"
+    restart_policy: unless-stopped
+    memory: 1g
+
+- name: Docker container nextcloud
+  docker_container:
+    name: nextcloud
+    image: "{{ nextcloud_docker_image }}"
+    pull: true
+    volumes:
+      - "{{ nextcloud_data_directory }}/config:/config:rw"
+      - "{{ nextcloud_data_directory }}/data:/data:rw"
+    ports:
+      - "{{ nextcloud_port_webgui }}:443"
+    env:
+      PUID: "{{ nextcloud_uid }}"
+      PGID: "{{ nextcloud_gid }}"
+      TZ: "{{ timezone }}"
+    restart_policy: unless-stopped
+    memory: 1g
+    labels:
+      traefik.backend: "nextcloud"
+      traefik.frontend.rule: "Host:nextcloud.{{ traefik_acme_domain }}"
+      traefik.port: "80"
