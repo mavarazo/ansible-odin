@@ -19,3 +19,6 @@
 
     - import_tasks: tasks/glances.yml
       tags: glances
+
+    - import_tasks: tasks/nextcloud.yml
+      tags: nextcloud
