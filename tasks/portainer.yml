@@ -1,0 +1,23 @@
+---
+- name: File portainer directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ portainer_username }}"
+    group: "{{ portainer_groupname }}"
+  with_items:
+    - "{{ portainer_data_directory }}"
+
+- name: Docker container portainer
+  docker_container:
+    name: portainer
+    image: "{{ portainer_docker_image }}"
+    pull: true
+    volumes:
+      - "{{ portainer_data_directory }}:/data:rw"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/etc/timezone:/etc/timezone:ro"
+    ports:
+      - "{{ portainer_port }}:9000"
+    restart_policy: unless-stopped
+    memory: 1g
