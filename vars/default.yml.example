@@ -38,6 +38,16 @@ traefik_acme_domain_sans:
   - "sans01.{{ traefik_acme_domain }}"
 
 ###
+### Portainer
+###
+portainer_username: "{{ docker_username }}"
+portainer_groupname: "{{ docker_groupname }}"
+portainer_docker_image: portainer/portainer:latest
+portainer_data_directory: "{{ docker_home }}/portainer"
+portainer_base_port: "{{ base_port + 20 }}"
+portainer_port_http: "{{ portainer_base_port }}"
+
+###
 ### Heimdall
 ###
 heimdall_username: "{{ docker_username }}"
@@ -46,7 +56,7 @@ heimdall_groupname: "{{ docker_groupname }}"
 heimdall_gid: "{{ docker_gid }}"
 heimdall_docker_image: linuxserver/heimdall:latest
 heimdall_data_directory: "{{ docker_home }}/heimdall"
-heimdall_base_port: "{{ base_port + 20 }}"
+heimdall_base_port: "{{ base_port + 30 }}"
 heimdall_port_http: "{{ heimdall_base_port }}"
 heimdall_port_https: "{{ heimdall_base_port + 1 }}"
 
@@ -54,7 +64,7 @@ heimdall_port_https: "{{ heimdall_base_port + 1 }}"
 ### Glances
 ###
 glances_docker_image: nicolargo/glances
-glances_base_port: "{{ base_port + 30 }}"
+glances_base_port: "{{ base_port + 40 }}"
 glances_port_one: "{{ glances_base_port }}"
 glances_port_two: "{{ glances_base_port + 1}}"
 
@@ -73,7 +83,7 @@ nextcloud_groupname: "{{ docker_groupname }}"
 nextcloud_gid: "{{ docker_gid }}"
 nextcloud_docker_image: linuxserver/nextcloud:latest
 nextcloud_data_directory: "{{ docker_home }}/nextcloud"
-nextcloud_base_port: "{{ base_port + 40 }}"
+nextcloud_base_port: "{{ base_port + 50 }}"
 nextcloud_port_webgui: "{{ nextcloud_base_port }}"
 nextcloud_port_database: "{{ nextcloud_base_port + 1 }}"
 nextcloud_database_database: nextcloud

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ansible-playbook playbook.yml --ask-become-pass -i hosts
+ansible-playbook playbook.yml --ask-become-pass -i hosts "$@"
