@@ -3,23 +3,112 @@ ansible_python_interpreter: /usr/bin/python3
 ###
 ### Global
 ###
-hostname:
-user: 
+hostname: <FIXME>
+user: <FIXME>
 timezone: Europe/Zurich
 base_port: 10000
 
 ###
+### Samba
+###
+samba_server_string: <FIXME>
+samba_shares_root: <FIXME>
+samba_apple_extensions: yes
+samba_guest_account: "{{ user }}"
+samba_netbios_name: "{{ hostname }}"
+
+downloads_directory: "{{ samba_shares_root }}/downloads"
+movies_directory: "{{ samba_shares_root }}/movies"
+music_directory: "{{ samba_shares_root }}/music"
+photos_directory: "{{ samba_shares_root }}/photos"
+podcasts_directory: "{{ samba_shares_root }}/podcasts"
+temp_directory: "{{ samba_shares_root }}/temp"
+timemachine_directory: "{{ samba_shares_root }}/timemachine"
+tv_directory: "{{ samba_shares_root }}/tv"
+
+samba_shares:
+  - name: downloads
+    comment: 'Downloads'
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browsable: yes
+    path: "{{ downloads_directory }}"
+
+  - name: movies
+    comment: 'Movies'
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browsable: yes
+    path: "{{ movies_directory }}"
+
+  - name: music
+    comment: 'Music'
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browsable: yes
+    path: "{{ music_directory }}"
+
+  - name: photos
+    comment: 'Photos'
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browsable: yes
+    path: "{{ photos_directory }}"
+
+  - name: podcasts
+    comment: 'Podcasts'
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browsable: yes
+    path: "{{ podcasts_directory }}"
+
+  - name: temp
+    comment: 'Temp'
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browsable: yes
+    path: "{{ temp_directory }}"
+
+  - name: timemachine
+    comment: 'Timemachine'
+    vfs_objects:
+      - name: fruit
+        options:
+          - name: time machine
+            value: yes
+      - name: streams_xattr
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browsable: yes
+    path: "{{ timemachine_directory }}"
+
+  - name: tv
+    comment: 'TV Shows'
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browsable: yes
+    path: "{{ tv_directory }}"
+
+###
 ### Docker
 ###
-docker_username: 
-docker_uid: 
-docker_groupname: 
-docker_gid: 
+docker_username: <FIXME>
+docker_uid: <FIXME>
+docker_groupname: <FIXME>
+docker_gid: <FIXME>
 
-docker_home: 
+docker_home: <FIXME>
 
-dockerhub_username: 
-dockerhub_password: 
+dockerhub_username: <FIXME>
+dockerhub_password: <FIXME>
 
 ###
 ### Traefik
@@ -30,12 +119,12 @@ traefik_base_port: "{{ base_port + 10 }}"
 traefik_port_http: "{{ traefik_base_port }}"
 traefik_port_https: "{{ traefik_base_port + 1}}"
 traefik_port_dashboard: "{{ traefik_base_port + 2}}"
-traefik_acme_email: 
+traefik_acme_email: <FIXME>
 traefik_acme_caserver: https://acme-staging-v02.api.letsencrypt.org/directory
-traefik_acme_domain: 
-traefik_acme_domain_main: "main.{{ traefik_acme_domain }}"
+traefik_acme_domain: <FIXME>
+traefik_acme_domain_main: "<FIXME>.{{ traefik_acme_domain }}"
 traefik_acme_domain_sans: 
-  - "sans01.{{ traefik_acme_domain }}"
+  - "<FIXME>.{{ traefik_acme_domain }}"
 
 ###
 ### Portainer
@@ -72,7 +161,7 @@ glances_port_two: "{{ glances_base_port + 1}}"
 ### MariaDB
 ###
 mariadb_docker_image: linuxserver/mariadb:latest
-mariadb_root_password:  
+mariadb_root_password: <FIXME>
 
 ###
 ### Nextcloud
@@ -87,5 +176,20 @@ nextcloud_base_port: "{{ base_port + 50 }}"
 nextcloud_port_webgui: "{{ nextcloud_base_port }}"
 nextcloud_port_database: "{{ nextcloud_base_port + 1 }}"
 nextcloud_database_database: nextcloud
-nextcloud_database_username: 
-nextcloud_database_password: 
+nextcloud_database_username: <FIXME>
+nextcloud_database_password: <FIXME>
+
+###
+### Plex
+###
+plex_username: "{{ docker_username }}"
+plex_uid: "{{ docker_uid }}"
+plex_groupname: "{{ docker_groupname }}"
+plex_gid: "{{ docker_gid }}"
+plex_docker_image: linuxserver/plex:latest
+plex_data_directory: "{{ docker_home }}/plex"
+plex_movies_directory: "{{ movies_root }}"
+plex_tv_directory: "{{ tv_root }}"
+plex_photos_directory: "{{ photos_root }}"
+plex_podcasts_directory: "{{ podcasts_root }}"
+plex_music_directory: "{{ music_root }}"

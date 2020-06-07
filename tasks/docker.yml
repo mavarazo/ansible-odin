@@ -1,14 +1,4 @@
 ---
-- name: User docker
-  user:
-    name: "{{ docker_username }}"
-    uid: "{{ docker_uid }}"
-    state: present
-    system: yes
-    update_password: on_create
-    create_home: no
-    group: "{{ docker_groupname }}"
-
 - name: APT add docker gpg apt key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
@@ -44,3 +34,13 @@
   docker_login:
     username: "{{ dockerhub_username }}"
     password: "{{ dockerhub_password }}"
+
+- name: User docker
+  user:
+    name: "{{ docker_username }}"
+    uid: "{{ docker_uid }}"
+    state: present
+    system: yes
+    update_password: on_create
+    create_home: no
+    group: "{{ docker_groupname }}"

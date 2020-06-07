@@ -3,6 +3,17 @@
   become: true
   vars_files:
     - vars/default.yml
+  pre_tasks:
+    - name: APT update cache
+      apt:
+        update-cache: true
+      failed_when: false
+      changed_when: false
+
+  roles:
+    - role: bertvv.samba
+      tags:
+        - samba
 
   tasks:
     - import_tasks: tasks/default.yml
@@ -25,3 +36,6 @@
 
     - import_tasks: tasks/nextcloud.yml
       tags: nextcloud
+
+    - import_tasks: tasks/plex.yml
+      tags: plex

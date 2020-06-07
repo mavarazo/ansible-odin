@@ -1,11 +1,4 @@
 ---
-- name: APT update cache
-  apt:
-    update_cache: yes
-    # cache_valid_time: 3600
-  register: result
-  until: result is succeeded
-
 - name: APT install required packages
   apt:
     name: 

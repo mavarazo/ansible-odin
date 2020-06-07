@@ -3,6 +3,7 @@ vars/*.yml
 .DS_Store
 .vagrant
 *.retry
+roles/bertvv.*
 
 # Environments
 .env
