@@ -45,7 +45,7 @@ portainer_groupname: "{{ docker_groupname }}"
 portainer_docker_image: portainer/portainer:latest
 portainer_data_directory: "{{ docker_home }}/portainer"
 portainer_base_port: "{{ base_port + 20 }}"
-portainer_port_http: "{{ portainer_base_port }}"
+portainer_port: "{{ portainer_base_port }}"
 
 ###
 ### Heimdall
