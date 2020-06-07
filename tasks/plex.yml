@@ -1,0 +1,44 @@
+---
+- name: Group plex
+  group:
+    name: "{{ plex_groupname }}"
+    gid: "{{ plex_gid }}"
+    state: present
+
+- name: User plex
+  user:
+    name: "{{ plex_username }}"
+    uid: "{{ plex_uid }}"
+    state: present
+    system: yes
+    update_password: on_create
+    create_home: no
+    group: "{{ plex_groupname }}"
+
+- name: File plex directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ plex_username }}"
+    group: "{{ plex_groupname }}"
+  with_items:
+    - "{{ plex_data_directory }}"
+
+- name: Docker container plex
+  docker_container:
+    name: plex
+    image: "{{ plex_docker_image }}"
+    pull: true
+    volumes:
+      - "{{ plex_data_directory }}/config:/config:rw"
+      - "{{ plex_data_directory }}/logs:/opt/plex/Library/Application Support/Plex Media Server/Logs:rw"
+      - "{{ movies_directory }}/movies:/movies:rw"
+      - "{{ photos_directory }}/photos:/photos:rw"
+      - "{{ podcasts_directory }}/podcasts:/podcasts:rw"
+      - "{{ music_directory }}/music:/music:rw"
+      - "{{ tv_directory }}/tv:/tv:rw"
+    env:
+      PUID: "{{ plex_uid }}"
+      PGID: "{{ plex_gid }}"
+      TZ: "{{ timezone }}"
+    memory: 3g
