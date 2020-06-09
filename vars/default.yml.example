@@ -203,6 +203,7 @@ pyload_groupname: "{{ docker_groupname }}"
 pyload_gid: "{{ docker_gid }}"
 pyload_docker_image: linuxserver/pyload:latest
 pyload_data_directory: "{{ docker_home }}/pyload"
+pyload_download_directory: "{{ downloads_directory }}"
 pyload_base_port: "{{ base_port|int + 60 }}"
 pyload_port_webgui: "{{ pyload_base_port|int }}"
 pyload_port_control: "{{ pyload_base_port|int + 1 }}"
