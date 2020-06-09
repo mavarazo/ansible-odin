@@ -34,10 +34,5 @@
       - "{{ traefik_data_directory }}/traefik.yml:/etc/traefik/traefik.yml"
       - "{{ traefik_data_directory }}/acme.json:/acme.json"
       - /var/run/docker.sock:/var/run/docker.sock
-    # labels:
-    #  traefik.enable: "true"
-    #  traefik.http.routers.traefik.rule: "Host(`traefik.{{ traefik_acme_domain }}`)"
-    #  traefik.http.routers.traefik.entrypoints: "websecure"
-    #  traefik.http.routers.traefik.service: "api@internal"
     restart_policy: unless-stopped
     memory: 1g

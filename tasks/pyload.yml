@@ -25,3 +25,8 @@
       - "{{ pyload_port_control }}:7227"
     restart_policy: unless-stopped
     memory: 1g
+    labels:
+      traefik.backend: "pyload"
+      traefik.frontend.rule: "Host:pyload.{{ traefik_acme_domain }}"
+      traefik.enable: "{{ pyload_available_external }}"
+      traefik.port: "8000"
