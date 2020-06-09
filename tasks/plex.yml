@@ -42,3 +42,8 @@
       PGID: "{{ plex_gid }}"
       TZ: "{{ timezone }}"
     memory: 3g
+    labels:
+      traefik.backend: "plex"
+      traefik.frontend.rule: "Host:plex.{{ traefik_acme_domain }}"
+      traefik.enable: "{{ plex_available_external }}"
+      traefik.port: "32400"

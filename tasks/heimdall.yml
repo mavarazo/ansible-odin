@@ -40,3 +40,8 @@
       - "{{ heimdall_port_https }}:443"
     restart_policy: unless-stopped
     memory: 1g
+    labels:
+      traefik.backend: "heimdall"
+      traefik.frontend.rule: "Host:heimdall.{{ traefik_acme_domain }}"
+      traefik.enable: "{{ heimdall_available_external }}"
+      traefik.port: "80"

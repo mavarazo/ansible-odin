@@ -21,3 +21,8 @@
       - "{{ portainer_port }}:9000"
     restart_policy: unless-stopped
     memory: 1g
+    labels:
+      traefik.backend: "portainer"
+      traefik.frontend.rule: "Host:portainer.{{ traefik_acme_domain }}"
+      traefik.enable: "{{ portainer_available_external }}"
+      traefik.port: "9000"

@@ -63,4 +63,6 @@
     labels:
       traefik.backend: "nextcloud"
       traefik.frontend.rule: "Host:nextcloud.{{ traefik_acme_domain }}"
-      traefik.port: "80"
+      traefik.enable: "{{ nextcloud_available_external }}"
+      traefik.port: "443"
+    
