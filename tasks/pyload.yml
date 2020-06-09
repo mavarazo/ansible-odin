@@ -1,0 +1,27 @@
+---
+- name: File pyload directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ pyload_username }}"
+    group: "{{ pyload_groupname }}"
+  with_items:
+    - "{{ pyload_data_directory }}"
+
+- name: Docker container pyload
+  docker_container:
+    name: pyload
+    image: "{{ pyload_docker_image }}"
+    pull: true
+    volumes:
+      - "{{ pyload_data_directory }}:/config:rw"
+      - "{{ downloads_directory }}:/downloads:rw"
+    env:
+      PUID: "{{ pyload_uid }}"
+      PGID: "{{ pyload_gid }}"
+      TZ: "{{ timezone }}"
+    ports:
+      - "{{ pyload_port_webgui }}:8000"
+      - "{{ pyload_port_control }}:7227"
+    restart_policy: unless-stopped
+    memory: 1g
