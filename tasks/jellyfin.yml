@@ -48,4 +48,4 @@
       traefik.backend: "jellyfin"
       traefik.frontend.rule: "Host:jellyfin.{{ traefik_acme_domain }}"
       traefik.enable: "{{ jellyfin_available_external }}"
-      traefik.port: "32400"
+      traefik.port: "8920"
