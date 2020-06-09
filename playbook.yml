@@ -43,3 +43,5 @@
     - import_tasks: tasks/jellyfin.yml
       tags: jellyfin
       
+    - import_tasks: tasks/pyload.yml
+      tags: pyload
