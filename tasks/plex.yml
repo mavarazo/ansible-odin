@@ -32,11 +32,11 @@
     volumes:
       - "{{ plex_data_directory }}/config:/config:rw"
       - "{{ plex_data_directory }}/logs:/opt/plex/Library/Application Support/Plex Media Server/Logs:rw"
-      - "{{ movies_directory }}/movies:/movies:rw"
-      - "{{ photos_directory }}/photos:/photos:rw"
-      - "{{ podcasts_directory }}/podcasts:/podcasts:rw"
-      - "{{ music_directory }}/music:/music:rw"
-      - "{{ tv_directory }}/tv:/tv:rw"
+      - "{{ plex_movies_directory }}:/movies:rw"
+      - "{{ plex_music_directory }}:/music:rw"
+      - "{{ plex_photos_directory }}:/photos:rw"
+      - "{{ plex_podcasts_directory }}:/podcasts:rw"
+      - "{{ plex_tv_directory }}:/tv:rw"
     env:
       PUID: "{{ plex_uid }}"
       PGID: "{{ plex_gid }}"
