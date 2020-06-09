@@ -115,10 +115,10 @@ dockerhub_password: <FIXME>
 ###
 traefik_data_directory: "{{ docker_home }}/traefik"
 traefik_docker_image: traefik:latest
-traefik_base_port: "{{ base_port + 10 }}"
-traefik_port_http: "{{ traefik_base_port }}"
-traefik_port_https: "{{ traefik_base_port + 1}}"
-traefik_port_dashboard: "{{ traefik_base_port + 2}}"
+traefik_base_port: "{{ base_port|int + 10 }}"
+traefik_port_http: "{{ traefik_base_port|int }}"
+traefik_port_https: "{{ traefik_base_port|int + 1}}"
+traefik_port_dashboard: "{{ traefik_base_port|int + 2}}"
 traefik_acme_email: <FIXME>
 traefik_acme_caserver: https://acme-staging-v02.api.letsencrypt.org/directory
 traefik_acme_domain: <FIXME>
@@ -133,8 +133,8 @@ portainer_username: "{{ docker_username }}"
 portainer_groupname: "{{ docker_groupname }}"
 portainer_docker_image: portainer/portainer:latest
 portainer_data_directory: "{{ docker_home }}/portainer"
-portainer_base_port: "{{ base_port + 20 }}"
-portainer_port: "{{ portainer_base_port }}"
+portainer_base_port: "{{ base_port|int + 20 }}"
+portainer_port: "{{ portainer_base_port|int }}"
 
 ###
 ### Heimdall
@@ -145,17 +145,17 @@ heimdall_groupname: "{{ docker_groupname }}"
 heimdall_gid: "{{ docker_gid }}"
 heimdall_docker_image: linuxserver/heimdall:latest
 heimdall_data_directory: "{{ docker_home }}/heimdall"
-heimdall_base_port: "{{ base_port + 30 }}"
-heimdall_port_http: "{{ heimdall_base_port }}"
-heimdall_port_https: "{{ heimdall_base_port + 1 }}"
+heimdall_base_port: "{{ base_port|int + 30 }}"
+heimdall_port_http: "{{ heimdall_base_port|int }}"
+heimdall_port_https: "{{ heimdall_base_port|int + 1 }}"
 
 ###
 ### Glances
 ###
 glances_docker_image: nicolargo/glances
-glances_base_port: "{{ base_port + 40 }}"
-glances_port_one: "{{ glances_base_port }}"
-glances_port_two: "{{ glances_base_port + 1}}"
+glances_base_port: "{{ base_port|int + 40 }}"
+glances_port_one: "{{ glances_base_port|int }}"
+glances_port_two: "{{ glances_base_port|int + 1}}"
 
 ###
 ### MariaDB
@@ -172,9 +172,9 @@ nextcloud_groupname: "{{ docker_groupname }}"
 nextcloud_gid: "{{ docker_gid }}"
 nextcloud_docker_image: linuxserver/nextcloud:latest
 nextcloud_data_directory: "{{ docker_home }}/nextcloud"
-nextcloud_base_port: "{{ base_port + 50 }}"
-nextcloud_port_webgui: "{{ nextcloud_base_port }}"
-nextcloud_port_database: "{{ nextcloud_base_port + 1 }}"
+nextcloud_base_port: "{{ base_port|int + 50 }}"
+nextcloud_port_webgui: "{{ nextcloud_base_port|int }}"
+nextcloud_port_database: "{{ nextcloud_base_port|int + 1 }}"
 nextcloud_database_database: nextcloud
 nextcloud_database_username: <FIXME>
 nextcloud_database_password: <FIXME>
@@ -193,3 +193,16 @@ plex_tv_directory: "{{ tv_root }}"
 plex_photos_directory: "{{ photos_root }}"
 plex_podcasts_directory: "{{ podcasts_root }}"
 plex_music_directory: "{{ music_root }}"
+
+###
+### pyLoad
+###
+pyload_username: "{{ docker_username }}"
+pyload_uid: "{{ docker_uid }}"
+pyload_groupname: "{{ docker_groupname }}"
+pyload_gid: "{{ docker_gid }}"
+pyload_docker_image: linuxserver/pyload:latest
+pyload_data_directory: "{{ docker_home }}/pyload"
+pyload_base_port: "{{ base_port|int + 60 }}"
+pyload_port_webgui: "{{ pyload_base_port|int }}"
+pyload_port_control: "{{ pyload_base_port|int + 1 }}"
