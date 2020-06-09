@@ -135,7 +135,7 @@ portainer_docker_image: portainer/portainer:latest
 portainer_data_directory: "{{ docker_home }}/portainer"
 portainer_base_port: "{{ base_port|int + 20 }}"
 portainer_port: "{{ portainer_base_port|int }}"
-portainer_available_external: false
+portainer_available_external: "false"
 
 ###
 ### Heimdall
@@ -149,7 +149,7 @@ heimdall_data_directory: "{{ docker_home }}/heimdall"
 heimdall_base_port: "{{ base_port|int + 30 }}"
 heimdall_port_http: "{{ heimdall_base_port|int }}"
 heimdall_port_https: "{{ heimdall_base_port|int + 1 }}"
-heimdall_available_external: false
+heimdall_available_external: "false"
 
 ###
 ### Glances
@@ -158,7 +158,7 @@ glances_docker_image: nicolargo/glances
 glances_base_port: "{{ base_port|int + 40 }}"
 glances_port_one: "{{ glances_base_port|int }}"
 glances_port_two: "{{ glances_base_port|int + 1}}"
-glances_available_external: false
+glances_available_external: "false"
 
 ###
 ### MariaDB
@@ -181,7 +181,7 @@ nextcloud_port_database: "{{ nextcloud_base_port|int + 1 }}"
 nextcloud_database_database: nextcloud
 nextcloud_database_username: <FIXME>
 nextcloud_database_password: <FIXME>
-nextcloud_available_external: false
+nextcloud_available_external: "false"
 
 ###
 ### Plex
@@ -197,7 +197,7 @@ plex_music_directory: "{{ music_directory }}"
 plex_photos_directory: "{{ photos_directory }}"
 plex_podcasts_directory: "{{ podcasts_directory }}"
 plex_tv_directory: "{{ tv_directory }}"
-plex_available_external: false
+plex_available_external: "false"
 
 ###
 ### Jellyfin
@@ -216,7 +216,7 @@ jellyfin_tv_directory: "{{ tv_directory }}"
 jellyfin_base_port: "{{ base_port|int + 60 }}"
 jellyfin_port_http: "{{ jellyfin_base_port|int }}"
 jellyfin_port_https: "{{ jellyfin_base_port|int + 1 }}"
-jellyfin_available_external: false
+jellyfin_available_external: "false"
 
 
 ###
@@ -232,4 +232,4 @@ pyload_download_directory: "{{ downloads_directory }}"
 pyload_base_port: "{{ base_port|int + 70 }}"
 pyload_port_webgui: "{{ pyload_base_port|int }}"
 pyload_port_control: "{{ pyload_base_port|int + 1 }}"
-pyload_available_external: false
+pyload_available_external: "false"
