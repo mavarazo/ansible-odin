@@ -39,3 +39,7 @@
 
     - import_tasks: tasks/plex.yml
       tags: plex
+
+    - import_tasks: tasks/jellyfin.yml
+      tags: jellyfin
+      

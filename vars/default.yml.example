@@ -200,6 +200,26 @@ plex_music_directory: "{{ music_root }}"
 plex_available_external: false
 
 ###
+### Jellyfin
+###
+jellyfin_username: "{{ docker_username }}"
+jellyfin_uid: "{{ docker_uid }}"
+jellyfin_groupname: "{{ docker_groupname }}"
+jellyfin_gid: "{{ docker_gid }}"
+jellyfin_docker_image: linuxserver/jellyfin:latest
+jellyfin_data_directory: "{{ docker_home }}/jellyfin"
+jellyfin_movies_directory: "{{ movies_root }}"
+jellyfin_tv_directory: "{{ tv_root }}"
+jellyfin_photos_directory: "{{ photos_root }}"
+jellyfin_podcasts_directory: "{{ podcasts_root }}"
+jellyfin_music_directory: "{{ music_root }}"
+jellyfin_base_port: "{{ base_port|int + 60 }}"
+jellyfin_port_http: "{{ jellyfin_base_port|int }}"
+jellyfin_port_https: "{{ jellyfin_base_port|int + 1 }}"
+jellyfin_available_external: false
+
+
+###
 ### pyLoad
 ###
 pyload_username: "{{ docker_username }}"
@@ -209,7 +229,7 @@ pyload_gid: "{{ docker_gid }}"
 pyload_docker_image: linuxserver/pyload:latest
 pyload_data_directory: "{{ docker_home }}/pyload"
 pyload_download_directory: "{{ downloads_directory }}"
-pyload_base_port: "{{ base_port|int + 60 }}"
+pyload_base_port: "{{ base_port|int + 70 }}"
 pyload_port_webgui: "{{ pyload_base_port|int }}"
 pyload_port_control: "{{ pyload_base_port|int + 1 }}"
 pyload_available_external: false

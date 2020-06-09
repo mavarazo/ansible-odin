@@ -1,0 +1,51 @@
+---
+- name: Group jellyfin
+  group:
+    name: "{{ jellyfin_groupname }}"
+    gid: "{{ jellyfin_gid }}"
+    state: present
+
+- name: User jellyfin
+  user:
+    name: "{{ jellyfin_username }}"
+    uid: "{{ jellyfin_uid }}"
+    state: present
+    system: yes
+    update_password: on_create
+    create_home: no
+    group: "{{ jellyfin_groupname }}"
+
+- name: File jellyfin directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ jellyfin_username }}"
+    group: "{{ jellyfin_groupname }}"
+  with_items:
+    - "{{ jellyfin_data_directory }}"
+
+- name: Docker container jellyfin
+  docker_container:
+    name: jellyfin
+    image: "{{ jellyfin_docker_image }}"
+    pull: true
+    volumes:
+      - "{{ jellyfin_data_directory }}/config:/config:rw"
+      - "{{ movies_directory }}/movies:/movies:rw"
+      - "{{ photos_directory }}/photos:/photos:rw"
+      - "{{ podcasts_directory }}/podcasts:/podcasts:rw"
+      - "{{ music_directory }}/music:/music:rw"
+      - "{{ tv_directory }}/tv:/tv:rw"
+    ports:
+      - "{{ jellyfin_port_http }}:8096"
+      - "{{ jellyfin_port_https }}:8920"
+    env:
+      PUID: "{{ jellyfin_uid }}"
+      PGID: "{{ jellyfin_gid }}"
+      TZ: "{{ timezone }}"
+    memory: 3g
+    labels:
+      traefik.backend: "jellyfin"
+      traefik.frontend.rule: "Host:jellyfin.{{ traefik_acme_domain }}"
+      traefik.enable: "{{ jellyfin_available_external }}"
+      traefik.port: "32400"
