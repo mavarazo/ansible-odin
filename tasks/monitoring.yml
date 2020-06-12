@@ -105,8 +105,8 @@
     image: "{{ monitoring_grafana_docker_image }}"
     pull: true
     volumes:
-      - "{{ grafana_data_directory }}/grafana/data:/var/lib/grafana:rw"
-      - "{{ grafana_data_directory }}/grafana/config/provisioning:/etc/grafana/provisioning:ro"
+      - "{{ monitoring_data_directory }}/grafana/data:/var/lib/grafana:rw"
+      - "{{ monitoring_data_directory }}/grafana/config/provisioning:/etc/grafana/provisioning:ro"
     ports:
       - "{{ monitoring_port_grafana }}:3000"
     restart_policy: unless-stopped
