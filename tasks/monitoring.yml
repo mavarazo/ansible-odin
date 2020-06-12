@@ -42,7 +42,7 @@
     group: "{{ monitoring_groupname }}"
     mode: u+x,g+x,o+x    
 
-- name: Template node_exporter.service
+- name: Template node-exporter.service
   template:
     src: monitoring.node-exporter.service.j2
     dest: /etc/systemd/system/node-exporter.service
