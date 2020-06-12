@@ -4,8 +4,8 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-User="{{ monitoring_username }}"
-Group="{{ monitoring_groupname }}"
+User={{ monitoring_username }}
+Group={{ monitoring_groupname }}
 Type=simple
 ExecStart=/usr/local/bin/node_exporter
 
