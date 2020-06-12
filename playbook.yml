@@ -45,3 +45,6 @@
       
     - import_tasks: tasks/pyload.yml
       tags: pyload
+
+    - import_tasks: tasks/monitoring.yml
+      tags: monitoring

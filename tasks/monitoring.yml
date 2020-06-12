@@ -1,0 +1,118 @@
+---
+- name: Group monitoring
+  group:
+    name: "{{ monitoring_groupname }}"
+    gid: "{{ monitoring_gid }}"
+    state: present
+
+- name: User monitoring
+  user:
+    name: "{{ monitoring_username }}"
+    uid: "{{ monitoring_uid }}"
+    state: present
+    system: yes
+    update_password: on_create
+    create_home: no
+    group: "{{ monitoring_groupname }}"
+
+- name: File monitoring directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ monitoring_username }}"
+    group: "{{ monitoring_groupname }}"
+  with_items:
+    - "{{ monitoring_data_directory }}"
+
+###
+### Node-Exporter
+###
+
+- name: Download and extract node-exporter
+  unarchive:
+    src: "https://github.com/prometheus/node_exporter/releases/download/v{{ monitoring_node_exporter_version }}/node_exporter-{{ monitoring_node_exporter_version }}.linux-amd64.tar.gz"
+    dest: /tmp
+    remote_src: yes
+
+- name: Copy bin node-exporter to /usr/local/bin
+  copy:
+    src: "/tmp/node_exporter-{{ monitoring_node_exporter_version }}.linux-amd64/node_exporter"
+    dest: /usr/local/bin/
+    owner: "{{ monitoring_username }}"
+    group: "{{ monitoring_groupname }}"
+    mode: u+x,g+x,o+x    
+
+- name: Template node_exporter.service
+  template:
+    src: monitoring.node-exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+
+- name: systemctl daemon_reload
+  systemd:
+    daemon_reload: yes
+
+- name: Start and Enable node_exporter
+  service:
+    name: node_exporter
+    state: started
+    enabled: yes
+
+- name: Check whether port 9100 is available
+  wait_for:
+    port: 9100
+    state: started
+    timeout: 5
+
+###
+### Prometheus
+###
+
+- name: Docker container prometheus
+  docker_container:
+    name: prometheus
+    image: "{{ monitoring_prometheus_docker_image }}"
+    pull: true
+    volumes:
+      - "{{ monitoring_data_directory }}/prometheus:/etc/prometheus:rw"
+    ports:
+      - "{{ monitoring_port_prometheus }}:9090"
+    restart_policy: unless-stopped
+    memory: 1g
+
+###
+### InfluxDB
+###
+
+- name: Docker container influxdb
+  docker_container:
+    name: influxdb
+    image: "{{ monitoring_influxdb_docker_image }}"
+    pull: true
+    volumes:
+      - "{{ monitoring_data_directory }}/influxdb:/var/lib/influxdb:rw"
+    ports:
+      - "{{ monitoring_port_influxdb }}:8086"
+    restart_policy: unless-stopped
+    memory: 1g
+
+###
+### Grafana
+###
+
+- name: Docker container grafana
+  docker_container:
+    name: grafana
+    image: "{{ monitoring_grafana_docker_image }}"
+    pull: true
+    volumes:
+      - "{{ grafana_data_directory }}/grafana/data:/var/lib/grafana:rw"
+      - "{{ grafana_data_directory }}/grafana/config/provisioning:/etc/grafana/provisioning:ro"
+    ports:
+      - "{{ monitoring_port_grafana }}:3000"
+    restart_policy: unless-stopped
+    memory: 1g
+    labels:
+      traefik.backend: "grafana"
+      traefik.frontend.rule: "Host:grafana.{{ traefik_acme_domain }}"
+      traefik.enable: "{{ monitoring_available_external }}"
+      traefik.port: "3000"
