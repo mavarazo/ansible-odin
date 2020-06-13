@@ -112,6 +112,8 @@
       - "{{ monitoring_data_directory }}/grafana/config/provisioning:/etc/grafana/provisioning:ro"
     ports:
       - "{{ monitoring_port_grafana }}:3000"
+    links:
+      - prometheus
     restart_policy: unless-stopped
     memory: 1g
     labels:
