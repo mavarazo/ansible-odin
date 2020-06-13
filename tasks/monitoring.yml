@@ -13,7 +13,10 @@
     system: yes
     update_password: on_create
     create_home: no
-    group: "{{ monitoring_groupname }}"
+    groups: 
+      - "{{ monitoring_groupname }}"
+      - docker
+    append: yes
 
 - name: File monitoring directories
   file:
