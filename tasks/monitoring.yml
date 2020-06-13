@@ -52,6 +52,8 @@
       - "{{ monitoring_data_directory }}/prometheus:/etc/prometheus:rw"
     ports:
       - "{{ monitoring_port_prometheus }}:9090"
+    links:
+      - node-exporter:node-exporter
     restart_policy: unless-stopped
     memory: 1g
 
