@@ -53,7 +53,7 @@
     ports:
       - "{{ monitoring_port_prometheus }}:9090"
     links:
-      - node-exporter:node-exporter
+      - node-exporter
     restart_policy: unless-stopped
     memory: 1g
 
