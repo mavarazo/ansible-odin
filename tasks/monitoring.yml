@@ -15,7 +15,7 @@
     create_home: no
     groups: 
       - "{{ monitoring_groupname }}"
-      - docker
+      - "{{ docker_groupname }}"
     append: yes
 
 - name: File monitoring directories
