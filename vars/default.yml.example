@@ -241,7 +241,7 @@ monitoring_data_directory: "{{ docker_home }}/monitoring"
 monitoring_prometheus_docker_image: prom/prometheus:latest
 monitoring_base_port: "{{ base_port|int + 80 }}"
 monitoring_port_prometheus: "{{ monitoring_base_port|int }}"
-monitoring_node_exporter_docker_image: prom/node-exporter:latest:latest
+monitoring_node_exporter_docker_image: prom/node-exporter:latest
 monitoring_port_node_exporter: "{{ monitoring_base_port|int + 1 }}"
 monitoring_grafana_docker_image: grafana/grafana:latest
 monitoring_port_grafana: "{{ monitoring_base_port|int + 2 }}"

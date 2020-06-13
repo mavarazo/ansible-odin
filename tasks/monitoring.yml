@@ -36,7 +36,7 @@
     image: "{{ monitoring_node_exporter_docker_image }}"
     pull: true
     ports:
-      - "{{ monitoring_port_node_exporter }}:9090"
+      - "{{ monitoring_port_node_exporter }}:9100"
     restart_policy: unless-stopped
     memory: 1g
 
